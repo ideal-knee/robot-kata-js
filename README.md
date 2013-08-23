@@ -6,10 +6,10 @@ A web application to explore a simple robot programming problem
 Requirements
 ------------
 
-  * A reasonably recent version of Python
+  * Ruby, RubyGems, and Bundler?
   * A reasonably reasonable web browser with JavaScript console
 
 Usage
 -----
 
-    bin/serve
+    bundle && foreman start
