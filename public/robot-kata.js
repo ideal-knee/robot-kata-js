@@ -1,16 +1,49 @@
-console.log("Hello Robot Kata!");
+loadFloorImage(function () {
+  console.log("Hello Robot Kata!");
+});
 
-var floorContext = document.getElementById('floor').getContext('2d');
-var floorImage = new Image();
-var floorOffset = $('#floor').offset();
+var floor = {
+  context: $('#floor')[0].getContext('2d'),
+  offset: $('#floor').offset(),
+  getPosition: function (e) {
+    return {
+      x: Math.floor(e.pageX - this.offset.left),
+      y: Math.floor(e.pageY - this.offset.top)
+    }
+  }
+}
 
-floorImage.src = 'roomba-dock.png';
-floorImage.onload = function () {
-  floorContext.drawImage(floorImage, 0, 0);
-};
+function loadFloorImage(callback) {
+  var image = new Image();
+  image.src = 'roomba-dock.png';
+  image.onload = function () {
+    floor.context.drawImage(this, 0, 0);
+    callback();
+  }
+}
+
+function getColor(pos) {
+  var imageData = floor.context.getImageData(pos.x, pos.y, 1, 1).data;
+  var r = imageData[0];
+  var g = imageData[1];
+  var b = imageData[2];
+  var threshold = 192;
+
+  if (r > threshold && g > threshold && b > threshold) {
+    return 'white';
+  } else if (r > threshold && g > threshold) {
+    return 'yellow';
+  } else if (r > threshold) {
+    return 'red';
+  } else if (g > threshold) {
+    return 'green';
+  } else if (b > threshold) {
+    return 'blue';
+  } else {
+    return 'black';
+  }
+}
 
 $('#floor').mousemove(function (e) {
-  var x = Math.floor(e.pageX - floorOffset.left);
-  var y = Math.floor(e.pageY - floorOffset.top);
-  console.log(floorContext.getImageData(x, y, 1, 1).data);
+  console.log(getColor(floor.getPosition(e)));
 });
