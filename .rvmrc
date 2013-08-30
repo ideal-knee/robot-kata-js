@@ -1,11 +1,3 @@
 #!/usr/bin/env bash
 
-RVMRC="ruby-1.9.3-p194"
-RUBYGEM_VERSION="1.8.25"
-
-rvm use $RVMRC --create --install
-
-if [[ `gem --version` != $RUBYGEM_VERSION ]] ; then
-  echo "Switching to RubyGems $RUBYGEM_VERSION"
-  rvm rubygems $RUBYGEM_VERSION
-fi
+rvm use ruby-1.9.3-p194 --create --install

@@ -12,4 +12,4 @@ Requirements
 Usage
 -----
 
-    bundle && foreman start
+    bundle && PORT=8000 foreman start
