@@ -12,4 +12,4 @@ Requirements
 Usage
 -----
 
-    bundle && PORT=8000 foreman start
+    bin/serve 
