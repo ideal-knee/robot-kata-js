@@ -1,4 +1,9 @@
-var floorCanvas = document.getElementById('floor');
+var canvasId = 'floor';
+var imageFileName = 'roomba-dock.png';
+
+function getElementById(rootElement, id) {
+  return rootElement.getElementById(id);
+}
 
 function get2DContext(canvas) {
   return canvas.getContext('2d');
@@ -53,15 +58,17 @@ function addMouseMoveCallback_(element, callback) {
   $(element).mousemove(callback);
 }
 
-function logColorAtEvent_(event) {
-  console.log(getColorName(getPixelColor(get2DContext(floorCanvas),
-                                         getRelativePosition(getElementPosition(floorCanvas),
-                                                             getEventPosition(event) ) )));
+function makeLogColorAtEvent_(canvas) {
+  return function (event) {
+    console.log(getColorName(getPixelColor(get2DContext(canvas),
+                                           getRelativePosition(getElementPosition(canvas),
+                                                               getEventPosition(event) ) )));
+  }
 }
 
 function printWelcomeMessage_() {
   console.log('Hello robot kata!');
 }
 
-loadImage_(get2DContext(floorCanvas), 'roomba-dock.png', printWelcomeMessage_);
-addMouseMoveCallback_(floorCanvas, logColorAtEvent_);
+loadImage_(get2DContext(getElementById(document, canvasId)), imageFileName, printWelcomeMessage_);
+addMouseMoveCallback_(getElementById(document, canvasId), makeLogColorAtEvent_(getElementById(document, canvasId)));
